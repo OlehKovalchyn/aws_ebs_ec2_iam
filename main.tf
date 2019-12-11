@@ -6,7 +6,7 @@ provider "aws" {
 
 //////////EC2/////////////
 
-resource "aws_instance" "web" {
+resource "aws_instance" "instance" {
   ami                    = "ami-0233214e13e500f77"  ///////instance ami NEED TO CHANGE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.sec_group.id]
@@ -55,3 +55,10 @@ resource "aws_ebs_volume" "ebs" {
   }
 }
 
+///////Maybe EBS Connection with EC2////////////
+
+resource "aws_volume_attachment" "ebs_connection" {
+  device_name = "/dev/sdh"
+  volume_id   = "${aws_ebs_volume.ebs.id}"
+  instance_id = "${aws_instance.instance.id}"
+}
